@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Beautiful Memories 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #ffb3d9, #ff99cc, #ffccdd);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 12px;
+            color: #ff6bb3;
+            animation: float 10s ease-in-out infinite;
+            opacity: 0.4;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-30px) rotate(10deg); }
+            50% { transform: translateY(-15px) rotate(-10deg); }
+            75% { transform: translateY(-25px) rotate(5deg); }
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 3rem;
+            color: #e91e63;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(255, 107, 179, 0.3);
+            z-index: 2;
+            position: relative;
+        }
+
+        .scrapbook {
+            max-width: 1200px;
+            margin: 0 auto;
+            z-index: 2;
+            position: relative;
+        }
+
+        .photo-frame {
+            position: relative;
+            margin: 30px 20px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .frame1 {
+            background: white;
+            padding: 15px 15px 40px 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: rotate(-2deg);
+            border: 2px solid #ff99cc;
+        }
+
+        .frame2 {
+            background: #fff8f0;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(255, 107, 179, 0.2);
+            transform: rotate(1.5deg);
+            border: 3px solid #ffb3d9;
+        }
+
+        .frame3 {
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+            transform: rotate(-1deg);
+            border: 4px dashed #ff6bb3;
+        }
+
+        .frame4 {
+            background: #ffeef7;
+            padding: 18px 18px 45px 18px;
+            box-shadow: 0 8px 25px rgba(255, 107, 179, 0.15);
+            transform: rotate(2deg);
+            border: 2px solid #ff8cc8;
+        }
+
+        .frame5 {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            transform: rotate(-0.5deg);
+            border: 3px solid #ffccdd;
+        }
+
+        .photo {
+            width: 280px;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .photo-frame:hover .photo {
+            transform: scale(1.05);
+        }
+
+        .photo-frame:hover {
+            transform: rotate(0deg) scale(1.02);
+            z-index: 10;
+        }
+
+        .caption {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            color: #e91e63;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border: 2px solid #ff99cc;
+        }
+
+        .sticker {
+            position: absolute;
+            font-size: 1.5rem;
+            z-index: 5;
+        }
+
+        .sticker1 { top: -10px; right: -10px; }
+        .sticker2 { top: -15px; left: -15px; }
+        .sticker3 { bottom: -10px; right: -10px; }
+        .sticker4 { top: 10px; left: -20px; }
+        .sticker5 { bottom: -15px; left: -10px; }
+
+        .doodle {
+            position: absolute;
+            font-size: 2rem;
+            color: #ff6bb3;
+            opacity: 0.7;
+            z-index: 3;
+            animation: wiggle 3s ease-in-out infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #ff6bb3, #ff99cc);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 179, 0.4);
+            z-index: 100;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 107, 179, 0.6);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .photo {
+                width: 250px;
+                height: 300px;
+            }
+            
+            .page-title {
+                font-size: 2.2rem;
+                margin-bottom: 30px;
+            }
+            
+            .photo-frame {
+                margin: 20px 10px;
+            }
+            
+            .scrapbook {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo {
+                width: 220px;
+                height: 280px;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-container" id="heartsContainer"></div>
+    
+    <button class="back-button" onclick="goBack()">
+        ← Back to Home
+    </button>
+    
+    <h1 class="page-title">📸 Our Beautiful Memories 📸</h1>
+    
+    <div class="scrapbook">
+        <!-- Photo 1 -->
+        <div class="photo-frame frame1">
+            <img class="photo" src="chehak1.jpg" alt="Our sweet moment together">
+            <div class="caption">You're my favourite person 💕</div>
+            <div class="sticker sticker1">✨</div>
+            <div class="doodle" style="top: -30px; right: 50px;">💖</div>
+        </div>
+
+        <!-- Photo 2 -->
+        <div class="photo-frame frame2">
+            <img class="photo" src="chehak5.jpg" alt="Close up of our love">
+            <div class="caption">I love you so much 💋</div>
+            <div class="sticker sticker2">💕</div>
+            <div class="doodle" style="bottom: -25px; left: 40px;">🌟</div>
+        </div>
+
+        <!-- Photo 3 -->
+        <div class="photo-frame frame3">
+            <img class="photo" src="chehak2.jpg" alt="Your beautiful smile">
+            <div class="caption">Your smile lights up my world ✨</div>
+            <div class="sticker sticker3">😍</div>
+            <div class="doodle" style="top: -20px; left: 30px;">💐</div>
+        </div>
+
+        <!-- Photo 4 -->
+        <div class="photo-frame frame4">
+            <img class="photo" src="chehak3.jpg" alt="I will love you always">
+            <div class="caption">Forever and always 💞</div>
+            <div class="sticker sticker4">🥰</div>
+            <div class="doodle" style="bottom: -35px; right: 20px;">💝</div>
+        </div>
+
+        <!-- Photo 5 -->
+        <div class="photo-frame frame5">
+            <img class="photo" src="chehak4.jpg" alt="Perfect together">
+            <div class="caption">Perfect together 👫💕</div>
+            <div class="sticker sticker5">💖</div>
+            <div class="doodle" style="top: -25px; right: 60px;">🎀</div>
+        </div>
+    </div>
+
+    <script>
+        
+
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            const hearts = ['💕', '💖', '💗', '💝', '💘'];
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 10 + 's';
+            heart.style.animationDuration = (Math.random() * 5 + 8) + 's';
+            
+            document.getElementById('heartsContainer').appendChild(heart);
+            
+            setTimeout(() => {
+                if (heart.parentNode) {
+                    heart.parentNode.removeChild(heart);
+                }
+            }, 13000);
+        }
+
+        // Create hearts periodically
+        setInterval(createHeart, 1500);
+        
+        // Create initial hearts
+        for (let i = 0; i < 10; i++) {
+            setTimeout(createHeart, i * 400);
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        // Add sparkle effect on photo hover
+        document.querySelectorAll('.photo-frame').forEach(frame => {
+            frame.addEventListener('mouseenter', function(e) {
+                const sparkle = document.createElement('div');
+                sparkle.innerHTML = '✨';
+                sparkle.style.position = 'absolute';
+                sparkle.style.top = '10px';
+                sparkle.style.right = '10px';
+                sparkle.style.fontSize = '2rem';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.zIndex = '20';
+                sparkle.style.animation = 'sparkle 1s ease-out infinite';
+                
+                this.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    if (sparkle.parentNode) {
+                        sparkle.parentNode.removeChild(sparkle);
+                    }
+                }, 2000);
+            });
+        });
+
+    
+       
+    </script>
+</body>
+</html>
